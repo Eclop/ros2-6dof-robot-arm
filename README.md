@@ -8,6 +8,7 @@ Paquete de simulación y descripción para un brazo robótico de 6 grados de lib
 
 El proyecto incluye la descripción URDF completa, mallas visuales y de colisión optimizadas, y los archivos fuente de diseño CAD.
 
+![Vista del Robot en RViz](preview.png)
 
 ## ✨ Características
 
@@ -19,7 +20,36 @@ El proyecto incluye la descripción URDF completa, mallas visuales y de colisió
 * **Fuente CAD:** Incluye el archivo original de **FreeCAD** (`.FCStd`) en la carpeta `cad/`.
 * **Automatización:** Incluye un `Makefile` para facilitar la compilación y ejecución.
 
-## 📂 Estructura del Proyecto
+## � Uso
+
+### Compilar el proyecto
+
+```bash
+make build
+```
+
+Compila el paquete usando `colcon build --symlink-install`. Gracias al symlink, si modificas archivos Python, XML o URDF/Xacro, no necesitas recompilar.
+
+### Lanzar la visualización
+
+```bash
+make launch
+```
+
+Ejecuta `ros2 launch my_robot_arm display.launch.py` que abre **RViz** con el modelo del robot. Incluye un panel de **Joint State Publisher GUI** para mover las articulaciones manualmente.
+
+### Otros comandos útiles
+
+| Comando | Descripción |
+|---------|-------------|
+| `make clean` | Elimina las carpetas `build/`, `install/` y `log/` |
+| `make rebuild` | Ejecuta `clean` + `build` (reconstrucción completa) |
+| `make deps` | Instala dependencias faltantes con `rosdep` |
+| `make check` | Muestra los archivos instalados en `share/` |
+
+> **Nota:** Si estás en Ubuntu 22.04 con ROS 2 Humble instalado nativamente, puedes usar estos comandos directamente. El comando `make start` solo es necesario si usas Distrobox.
+
+## �📂 Estructura del Proyecto
 
 ```text
 .
