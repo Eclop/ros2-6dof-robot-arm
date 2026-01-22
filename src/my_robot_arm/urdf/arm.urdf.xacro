@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_robot_arm">
+
+    <material name="grey"> <color rgba="0.5 0.5 0.5 1"/> </material>
+    <material name="purple"> <color rgba="0.6 0.0 0.6 1"/> </material>
+    <material name="green"> <color rgba="0.0 0.8 0.0 1"/> </material>
+    <material name="red"> <color rgba="0.8 0.1 0.1 1"/> </material>
+    <material name="blue"> <color rgba="0.1 0.1 1 1"/> </material>
+    <material name="yellow"> <color rgba="1 1 0 1"/> </material>
+    <material name="orange"> <color rgba="1 0.5 0.2 1"/> </material>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_0_base.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="green"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_0_base.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+    <link name="waist_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_1_waist.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="purple"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_1_waist.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="base_to_waist" type="revolute">
+        <parent link="base_link"/>
+        <child link="waist_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/> <axis xyz="0 0 1"/>
+        <limit lower="-3.14" upper="3.14" effort="100" velocity="1.0"/>
+    </joint>
+
+    <link name="shoulder_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_2_shoulder.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_2_shoulder.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="waist_to_shoulder" type="revolute">
+        <parent link="waist_link"/>
+        <child link="shoulder_link"/>
+        
+        <origin xyz="0.075 0.015 0.05597" rpy="-1.57 0 0"/> 
+        <axis xyz="0 0 1"/>
+        <limit lower="0" upper="3.14" effort="100" velocity="1.0"/>
+    </joint>
+
+    <link name="elbow_link_1">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_3_elbow.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_3_elbow.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="shoulder_to_elbow" type="revolute">
+        <parent link="shoulder_link"/>
+        <child link="elbow_link_1"/>
+        
+        <origin xyz="-0.3 0 0" rpy="0 0 0"/> 
+        
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.24" upper="2" effort="100" velocity="1.0"/>
+    </joint>
+
+    <link name="elbow_link_2">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_4_elbow.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_4_elbow.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="elbow_to_elbow" type="revolute">
+        <parent link="elbow_link_1"/>
+        <child link="elbow_link_2"/>
+        
+        <origin xyz="-0.15 0 0" rpy="0 1.57 0"/> 
+        
+        <axis xyz="0 0 1"/>
+        <limit lower="-2.5" upper="2.5" effort="100" velocity="1.0"/>
+    </joint>
+
+    <link name="hand_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_5_hand.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="yellow"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_5_hand.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="elbow_to_hand" type="revolute">
+        <parent link="elbow_link_2"/>
+        <child link="hand_link"/>
+        
+        <origin xyz="0 0 -0.15" rpy="0 1.57 3.14"/>   
+        
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.98" upper="1.98" effort="100" velocity="1.0"/>
+    </joint>
+
+    <link name="tool_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_6_tool.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="green"/>
+        </visual>
+    </link>
+
+    <joint name="hand_to_tool" type="fixed">
+        <parent link="hand_link"/>
+        <child link="tool_link"/>        
+        <origin xyz="0.08 0 0" rpy="-1.57 0 1.57"/>
+    </joint>
+</robot>
