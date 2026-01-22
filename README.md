@@ -8,8 +8,6 @@ Paquete de simulación y descripción para un brazo robótico de 6 grados de lib
 
 El proyecto incluye la descripción URDF completa, mallas visuales y de colisión optimizadas, y los archivos fuente de diseño CAD.
 
-![Vista del Robot en Rviz](https://via.placeholder.com/800x400?text=Agrega+tu+captura+de+pantalla+aqui)
-*(Reemplaza esta línea con la ruta a tu imagen, ej: `docs/preview.png`)*
 
 ## ✨ Características
 
@@ -32,6 +30,7 @@ El proyecto incluye la descripción URDF completa, mallas visuales y de colisió
     ├── meshes/             # Archivos STL (Visual & Collision)
     └── urdf/               # Descripción del robot (.xacro)
 
+```
 
 ## 🔗 Créditos y Referencias 3D
 La geometría de este robot está basada en un diseño open-source obtenido de GrabCAD. 
