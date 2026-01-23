@@ -1,4 +1,4 @@
-# 🤖 Brazo Robótico 6-DOF (ROS 2 Humble)
+# Brazo Robótico 6-DOF (ROS 2 Humble)
 
 ![ROS 2](https://img.shields.io/badge/ROS_2-Humble-blue)
 ![License](https://img.shields.io/badge/License-Apache_2.0-green)

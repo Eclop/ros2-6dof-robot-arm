@@ -158,6 +158,12 @@
             </geometry>
             <material name="green"/>
         </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_6_tool.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
     </link>
 
     <joint name="hand_to_tool" type="fixed">
@@ -165,4 +171,46 @@
         <child link="tool_link"/>        
         <origin xyz="0.08 0 0" rpy="-1.57 0 1.57"/>
     </joint>
+
+    <!-- ros2_control configuration for MoveIt -->
+    <ros2_control name="my_robot_arm_control" type="system">
+        <hardware>
+            <plugin>mock_components/GenericSystem</plugin>
+        </hardware>
+        <joint name="base_to_waist">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="waist_to_shoulder">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="shoulder_to_elbow">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="elbow_to_elbow">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+        <joint name="elbow_to_hand">
+            <command_interface name="position"/>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity"/>
+        </joint>
+    </ros2_control>
 </robot>

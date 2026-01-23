@@ -1,12 +1,15 @@
-# ROS2 build artifacts
+# === ROS 2 BUILD ARTIFACTS ===
 build/
 install/
 log/
+test_results/
 
-# Colcon specific
+# === COLCON & AMENT ===
 .colcon/
+COLCON_IGNORE
+AMENT_IGNORE
 
-# Python
+# === PYTHON ===
 __pycache__/
 *.py[cod]
 *$py.class
@@ -15,14 +18,12 @@ __pycache__/
 *.egg-info/
 .eggs/
 *.egg
-
-# Virtual environments
 venv/
 .venv/
 env/
 .env/
 
-# IDE and editors
+# === IDE & EDITORS ===
 .vscode/
 .idea/
 *.swp
@@ -32,8 +33,10 @@ env/
 .cproject
 .pydevproject
 .settings/
+\#*\#
+.#*
 
-# OS generated files
+# === OS GENERATED FILES ===
 .DS_Store
 .DS_Store?
 ._*
@@ -42,26 +45,30 @@ env/
 Thumbs.db
 ehthumbs.db
 
-# Debug files
+# === ROBOTICS & SIMULATION FILES ===
+# Ignorar URDFs generados (suelen ser temporales o derivados de xacros)
 *.urdf
+# ¡PERO permitir los URDF que son parte del código fuente!
 !src/**/*.urdf
 
-# Temporary files
-*.tmp
-*.bak
-*.orig
+# Archivos generados por Gazebo o MoveIt temporalmente
+*.sdf.erb
+*.gv
+*.pdf
+*.graphiz
 
-# Coverage reports
+# === DOCUMENTATION ===
 htmlcov/
 .coverage
 .coverage.*
 coverage.xml
 *.cover
 
-# Compiled source
+# === COMPILED SOURCE ===
 *.o
 *.a
 *.lib
 
-# Log files
+# === LOGS & DATABASES ===
 *.log
+*.sqlite

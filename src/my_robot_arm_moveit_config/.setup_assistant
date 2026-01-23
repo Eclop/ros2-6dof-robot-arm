@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: my_robot_arm
+    relative_path: urdf/arm.urdf.xacro
+  srdf:
+    relative_path: config/my_robot_arm.srdf
+  package_settings:
+    author_name: blueTesting
+    author_email: eburboa17@outlook.com
+    generated_timestamp: 1769138583
