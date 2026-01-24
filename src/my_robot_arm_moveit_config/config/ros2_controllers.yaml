@@ -1,11 +1,10 @@
-# This config file is used by ros2_control
+# Configuración del Hardware (ROS 2 Control)
 controller_manager:
   ros__parameters:
     update_rate: 100  # Hz
 
     arm_controller:
       type: joint_trajectory_controller/JointTrajectoryController
-
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -23,3 +22,16 @@ arm_controller:
     state_interfaces:
       - position
       - velocity
+    
+    # --- PARÁMETROS DE CONTROL Y TOLERANCIA ---
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+    open_loop_control: true
+    
+    # Esta es la línea que silencia el Warning amarillo:
+    allow_nonzero_velocity_at_trajectory_end: true 
+    
+    constraints:
+      stopped_velocity_tolerance: 0.0
+      goal_time: 0.0

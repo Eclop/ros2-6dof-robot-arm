@@ -9,14 +9,15 @@ Paquete de simulación y descripción para un brazo robótico de 6 grados de lib
 
 ![Vista del Robot en RViz](preview.png)
 
-## ✨ Características
+## Características
 
 * **Descripción URDF/Xacro:** Modelo cinemático completo con límites de articulación configurados.
 * **Integración ros2_control:** Hardware interface configurado para simulación con `mock_components/GenericSystem`.
 * **MoveIt 2:** Configuración completa para planificación de movimiento, incluyendo:
     * Grupo de planificación `arm` con los 5 joints activos
-    * Cinemática inversa con KDL
+    * Cinemática inversa con KDL (con soporte `position_only_ik`)
     * Controladores de trayectoria configurados
+* **Control Programático:** Script Python para mover el robot mediante coordenadas cartesianas o por articulaciones.
 * **Mallas Personalizadas:**
     * Visuales y de colisión optimizadas
     * Código de colores para fácil identificación de eslabones
@@ -25,7 +26,7 @@ Paquete de simulación y descripción para un brazo robótico de 6 grados de lib
 
 ---
 
-## 🚀 Uso
+## Uso
 
 ### Compilar el proyecto
 
@@ -41,7 +42,7 @@ make launch
 
 Abre **RViz** con el modelo del robot y el panel **Joint State Publisher GUI** para mover las articulaciones manualmente.
 
-### 🤖 MoveIt 2 - Planificación de Movimiento
+### MoveIt 2 - Planificación de Movimiento
 
 #### Lanzar Demo de MoveIt
 
@@ -62,9 +63,21 @@ make moveit-setup
 
 Útil para regenerar o modificar la configuración de MoveIt.
 
+### Control Programático
+
+Con MoveIt ejecutándose (`make moveit-demo`), puedes controlar el robot mediante código:
+
+```bash
+ros2 run my_robot_arm simple_move.py
+```
+
+El script `simple_move.py` permite:
+- **`go_to_safe_pose()`**: Mover el robot a una posición vertical segura (espacio de articulaciones)
+- **`go_to_point(x, y, z)`**: Mover el efector final a coordenadas cartesianas específicas
+
 ---
 
-## 📋 Comandos del Makefile
+## Comandos del Makefile
 
 | Comando | Descripción |
 |---------|-------------|
@@ -77,13 +90,13 @@ make moveit-setup
 | **MoveIt** | |
 | `make moveit-demo` | Lanza demo de MoveIt con planificación |
 | `make moveit-setup` | Abre MoveIt Setup Assistant |
-| `make moveit-clean` | Elimina configuración de MoveIt (⚠️ destructivo) |
+| `make moveit-clean` | Elimina configuración de MoveIt (destructivo) |
 
 > **Nota:** El comando `make start` solo es necesario si usas Distrobox.
 
 ---
 
-## 📂 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```text
 .
@@ -93,12 +106,14 @@ make moveit-setup
     ├── my_robot_arm/                # Paquete principal ROS 2
     │   ├── launch/                  # display.launch.py
     │   ├── meshes/                  # Archivos STL
+    │   ├── scripts/                 # Scripts de control (simple_move.py)
     │   └── urdf/                    # arm.urdf.xacro (con ros2_control)
     │
     └── my_robot_arm_moveit_config/  # Configuración MoveIt 2
         ├── config/
         │   ├── joint_limits.yaml    # Límites de velocidad/aceleración
         │   ├── kinematics.yaml      # Solver cinemático (KDL)
+        │   ├── moveit_controllers.yaml # Puente MoveIt -> ros2_control
         │   ├── my_robot_arm.srdf    # Descripción semántica del robot
         │   └── ros2_controllers.yaml # Configuración de controladores
         └── launch/                  # Archivos de lanzamiento MoveIt
@@ -106,7 +121,7 @@ make moveit-setup
 
 ---
 
-## 🔧 Articulaciones (Joints)
+## Articulaciones (Joints)
 
 | Joint | Tipo | Rango (rad) | Descripción |
 |-------|------|-------------|-------------|
@@ -119,7 +134,7 @@ make moveit-setup
 
 ---
 
-## 🔗 Créditos y Referencias 3D
+## Créditos y Referencias 3D
 
 La geometría de este robot está basada en un diseño open-source obtenido de GrabCAD:
 
