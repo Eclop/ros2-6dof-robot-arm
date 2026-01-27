@@ -8,6 +8,9 @@
     <material name="blue"> <color rgba="0.1 0.1 1 1"/> </material>
     <material name="yellow"> <color rgba="1 1 0 1"/> </material>
     <material name="orange"> <color rgba="1 0.5 0.2 1"/> </material>
+    <material name="cyan"> <color rgba="0 1 1 1"/> </material>
+    <material name="olive"> <color rgba="0.5 0.5 0 1"/> </material>
+
 
     <link name="base_link">
         <visual>
@@ -150,27 +153,81 @@
         <limit lower="-1.98" upper="1.98" effort="100" velocity="1.0"/>
     </joint>
 
-    <link name="tool_link">
+    <link name="gripper_link">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://my_robot_arm/meshes/link_6_tool.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://my_robot_arm/meshes/link_6_gripper_base.stl" scale="0.001 0.001 0.001"/>
             </geometry>
-            <material name="green"/>
+            <material name="orange"/>
         </visual>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <geometry>
-                <mesh filename="package://my_robot_arm/meshes/link_6_tool.stl" scale="0.001 0.001 0.001"/>
+                <mesh filename="package://my_robot_arm/meshes/link_6_gripper_base.stl" scale="0.001 0.001 0.001"/>
             </geometry>
         </collision>
     </link>
 
-    <joint name="hand_to_tool" type="fixed">
+    <joint name="hand_to_gripper" type="fixed">
         <parent link="hand_link"/>
-        <child link="tool_link"/>        
-        <origin xyz="0.08 0 0" rpy="-1.57 0 1.57"/>
+        <child link="gripper_link"/>        
+        <origin xyz="0.08 0 0" rpy="0 -1.57 0"/>
     </joint>
+
+    <link name="gripper_finger_right_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_7_gripper_finger.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="cyan"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_7_gripper_finger.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="gripper_to_finger_right" type="prismatic">
+    
+        <parent link="gripper_link"/>
+        <child link="gripper_finger_right_link"/>
+        <origin xyz="0.00578 0.02188 -0.040" rpy="0 0 0"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-0.005" upper="0.008" effort="100" velocity="1.0"/>
+    </joint>
+
+    <joint name="gripper_to_finger_left" type="prismatic">
+        <parent link="gripper_link"/>
+        <child link="gripper_finger_left_link"/>   
+        <origin xyz="-0.00578 -0.02188 -0.040" rpy="3.14 3.14 0"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-0.005" upper="0.008" effort="100" velocity="1.0"/>
+        <mimic joint="gripper_to_finger_right" multiplier="1" offset="0"/>
+    </joint>
+
+    
+    <link name="gripper_finger_left_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_7_gripper_finger.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="olive"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_robot_arm/meshes/link_7_gripper_finger.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </collision>
+    </link>
+
+
+    
 
     <!-- ros2_control configuration for MoveIt -->
     <ros2_control name="my_robot_arm_control" type="system">
