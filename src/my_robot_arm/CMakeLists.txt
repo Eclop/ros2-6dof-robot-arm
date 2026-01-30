@@ -33,6 +33,7 @@ install(DIRECTORY
 # ---------------------------------------------------------
 install(PROGRAMS
   scripts/simple_move.py
+  scripts/simple_pick.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
