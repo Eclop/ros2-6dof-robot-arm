@@ -19,7 +19,7 @@ class RobotController(Node):
         
         # 1. Esperar al servidor
         if not self._action_client.wait_for_server(timeout_sec=5.0):
-            print("❌ Error: MoveIt no responde.")
+            print("Error: MoveIt no responde.")
             return False
 
         # 2. Construir el mensaje de meta
@@ -45,25 +45,25 @@ class RobotController(Node):
         goal_msg.request.goal_constraints = [constraints]
 
         # 4. Enviar y esperar
-        print("➡️  Enviando trayectoria...")
+        print("Enviando trayectoria...")
         future = self._action_client.send_goal_async(goal_msg)
         rclpy.spin_until_future_complete(self, future)
         goal_handle = future.result()
 
         if not goal_handle.accepted:
-            print("❌ Meta rechazada por el servidor.")
+            print("Meta rechazada por el servidor.")
             return False
 
-        print("⏳ Ejecutando movimiento...")
+        print("Ejecutando movimiento...")
         result_future = goal_handle.get_result_async()
         rclpy.spin_until_future_complete(self, result_future)
         result = result_future.result().result
 
         if result.error_code.val == 1:
-            print("✅ ¡Movimiento completado con éxito!")
+            print("¡Movimiento completado con éxito!")
             return True
         else:
-            print(f"❌ Fallo con código de error: {result.error_code.val}")
+            print(f"Fallo con código de error: {result.error_code.val}")
             return False
 
     # --- FUNCIONES ESPECÍFICAS PARA TU ROBOT ---
